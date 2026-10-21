@@ -1,13 +1,16 @@
 # oisdhosts
 
-[OISD](https://oisd.nl) (big) のブロックリストを、[bindhosts](https://github.com/bindhosts/bindhosts) で使える hosts 形式 (`0.0.0.0 ドメイン`) に変換して配布します。
+[OISD](https://oisd.nl) (big / small) のブロックリストを、[bindhosts](https://github.com/bindhosts/bindhosts) で使える hosts 形式 (`0.0.0.0 ドメイン`) に変換して配布します。
 GitHub Actions で毎日自動更新されます。
 
 ## 固定リンク
 
-```
-https://raw.githubusercontent.com/minittupoyo/oisdhosts/main/oisd_big_hosts.txt
-```
+Releases の `latest` に毎日上書きされます。
+
+| リスト | URL |
+| --- | --- |
+| big | `https://github.com/minittupoyo/oisdhosts/releases/latest/download/oisd_big_hosts.txt` |
+| small | `https://github.com/minittupoyo/oisdhosts/releases/latest/download/oisd_small_hosts.txt` |
 
 bindhosts の `sources.txt` にこの URL を追加してください。
 
