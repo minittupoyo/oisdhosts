@@ -14,6 +14,8 @@ Releases の `latest` に毎日上書きされます。
 
 bindhosts の `sources.txt` にこの URL を追加してください。
 
+案内ページ: https://minittupoyo.github.io/oisdhosts/
+
 ## 手元で変換する
 
 ```sh

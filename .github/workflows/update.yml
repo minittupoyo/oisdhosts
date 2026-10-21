@@ -7,10 +7,13 @@ on:
   push:
     paths:
       - oisd2bindhosts.sh
+      - site/**
       - .github/workflows/update.yml
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: update-hosts
@@ -38,3 +41,25 @@ jobs:
             gh release create latest --title "latest" --notes "$notes" --latest
           fi
           gh release upload latest oisd_big_hosts.txt oisd_small_hosts.txt --clobber
+
+      - name: Build Pages site
+        run: |
+          mkdir -p _site
+          sed -e "s/__UPDATED__/$(date -u '+%Y-%m-%d %H:%M UTC')/" \
+              -e "s/__BIG_COUNT__/$(grep -c '^0\.0\.0\.0 ' oisd_big_hosts.txt | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta')/" \
+              -e "s/__SMALL_COUNT__/$(grep -c '^0\.0\.0\.0 ' oisd_small_hosts.txt | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta')/" \
+              site/index.html > _site/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
